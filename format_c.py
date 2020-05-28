@@ -14,4 +14,7 @@ str1 = re.sub(r'#include.*[<"][a-z.]+[>"]' +
 			'|[' + string.whitespace + string.punctuation + ']'+  
 			'|int.*main.*(.*int.*argc.*,.*char.*argv.*)', r'', str0).lower()
 
+with open('std', 'w') as f:
+	f.write(str1)
+
 print(str1)
