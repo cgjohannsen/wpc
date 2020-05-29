@@ -66,17 +66,3 @@ with open('matches', 'w') as f:
 		if count > 3:
 			f.write('{}\n{}\n{}\n\n'.format(comp[0][0], comp[1][0], count))
 			counts.append(count)
-
-"""
-	for k0, v0 in fingerprints.items():
-		count = 0
-		for k1, v1 in fingerprints.items():
-			for i in range(0, len(v0)):
-				for j in range(i, len(v1)):
-					if v0[i] == v1[j]:
-						count = count + 1
-			if count > 0:
-				f.write('{}\n{}\n{}\n\n'.format(k0, k1, count))
-				counts.append(count)
-"""
-print(counts)
