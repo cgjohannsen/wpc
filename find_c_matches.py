@@ -49,9 +49,42 @@ for root, dirs, files in os.walk('./lab-9/'):
 
 fingerprints = {}
 
-for k, v in stds.items():
-	fingerprints[k] = alg.winnow(v, 20, 20)
+k = 20 # k-gram length
+w = 20 # window size
 
+for key, val in stds.items():
+	prints = alg.winnow(val, k, w)
+	for p in prints:
+		if p[0] in fingerprints:
+			fingerprints[p[0]].append((key, p[1]))
+		else:
+			fingerprints[p[0]] = [(key, p[1])]
+
+total = {}
+
+with open('matches', 'w') as f:
+	for key, val in stds.items():
+		prints = alg.winnow(val, k, w)
+		matches = {}
+		for p in prints:
+			if len(fingerprints[p[0]]) > 1:
+				for hits in fingerprints[p[0]]:
+					if not hits[0] == key:
+						if not hits[0] in matches:
+							matches[hits[0]] = 1
+						else:
+							matches[hits[0]] += 1
+		total[key] = matches
+	for key, val in total.items():
+		significant = {}
+		for match, hits in val.items():
+			if hits > 5:
+				significant[match] = hits
+				f.write('{}\n{}\n\n'.format(key, significant))
+
+	
+
+"""
 counts = []
 
 # quick and dirty way to compare each files' fingerprints
@@ -66,3 +99,4 @@ with open('matches', 'w') as f:
 		if count > 3:
 			f.write('{}\n{}\n{}\n\n'.format(comp[0][0], comp[1][0], count))
 			counts.append(count)
+"""
