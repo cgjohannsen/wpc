@@ -25,12 +25,18 @@ parser.add_argument('-e', '--extension', default='c', \
 						help='file extension used to determine which files to fingerprint')
 parser.add_argument('-o', '--output', default='prints.csv', \
 						help='file where csv data will be written')
+parser.add_argument('-k', '--kgram', default=20, type=int, \
+						help='size of k-gram used in winnowing algorithm')
+parser.add_argument('-w', '--windowsize', default=20, type=int, \
+						help='window size used in winnowing algorithm')
 args = parser.parse_args()
 
 directory = args.dir
 students_file = args.students
 ext = args.extension
 csv_file = args.output
+k = args.kgram
+w = args.windowsize
 
 with open(students_file, 'r') as f:	
 	students = re.split('[\n, ]', f.read())
@@ -54,10 +60,7 @@ for root, dirs, files in os.walk(directory):
 			filename = student + '-' + re.sub('.c', '', filename)
 			stds[filename] = standard
 
-k = 20 # k-gram length
-w = 20 # window size
-
-with open(csv_file, 'w', newline='') as prints_csv:
+with open(csv_file, 'a', newline='') as prints_csv:
 	writer = csv.writer(prints_csv)
 	for filename, standard in stds.items():
 		prints = alg.winnow(standard, k, w)

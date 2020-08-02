@@ -11,7 +11,7 @@ import csv
 	
 d = 'Finds matches between fingerprints of files as outputted by compile_prints.py'
 parser = argparse.ArgumentParser(description=d)
-parser.add_argument('-m', '--matches', type=int, default=5, \
+parser.add_argument('-m', '--matches', type=int, default=10, \
 						help='number of matches between files that is significant')
 parser.add_argument('-i', '--input', default='prints.csv', \
 						help='csv file where fingerprint data is read from')
